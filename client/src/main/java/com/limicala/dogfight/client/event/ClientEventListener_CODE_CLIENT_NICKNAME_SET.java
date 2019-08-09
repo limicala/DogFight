@@ -1,5 +1,6 @@
 package com.limicala.dogfight.client.event;
 
+import com.limicala.dogfight.message.ConsoleMessage;
 import io.netty.channel.Channel;
 import org.nico.noson.util.string.StringUtils;
 import com.limicala.dogfight.enums.ClientEventCode;
@@ -22,10 +23,10 @@ public class ClientEventListener_CODE_CLIENT_NICKNAME_SET extends ClientEventLis
 		if (StringUtils.isNotBlank(data)) {
 			Map<String, Object> dataMap = MapHelper.parser(data);
 			if (dataMap.containsKey("invalidLength")) {
-				SimplePrinter.printNotice("Your nickname length was invalid: " + dataMap.get("invalidLength"));
+				SimplePrinter.printNotice(ConsoleMessage.bind(ConsoleMessage.NICKNAME_INVALID, dataMap.get("invalidLength")));
 			}
 		}
-		SimplePrinter.printNotice("Please set your nickname (upto " + NICKNAME_MAX_LENGTH + " characters)");
+		SimplePrinter.printNotice(ConsoleMessage.bind(ConsoleMessage.NICKNAME_SET, NICKNAME_MAX_LENGTH));
 		String nickname = SimpleWriter.write("nickname");
 		
 		// If the length of nickname is more that NICKNAME_MAX_LENGTH

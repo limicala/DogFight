@@ -1,5 +1,6 @@
 package com.limicala.dogfight.client.event;
 
+import com.limicala.dogfight.message.ConsoleMessage;
 import io.netty.channel.Channel;
 import org.nico.noson.Noson;
 import org.nico.noson.entity.NoType;
@@ -20,16 +21,16 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 	public void call(Channel channel, String data) {
 		Map<String, Object> map = MapHelper.parser(data);
 		
-		SimplePrinter.printNotice("It's your turn to play, your pokers are as follows: ");
+		SimplePrinter.printNotice(ConsoleMessage.PLAY_YOUR_TURN);
 		List<Poker> pokers = Noson.convert(map.get("pokers"), new NoType<List<Poker>>() {});
 		SimplePrinter.printPokers(pokers);
 		
 		
-		SimplePrinter.printNotice("Please enter the card you came up with (enter [EXIT] to exit current room, enter [PASS] to jump current round)");
+		SimplePrinter.printNotice(ConsoleMessage.PLAY_ENTER_CARD);
 		String line = SimpleWriter.write("card");
 
 		if(line == null){
-			SimplePrinter.printNotice("Invalid enter");
+			SimplePrinter.printNotice(ConsoleMessage.INVALID_ENTER);
 			call(channel, data);
 		}else{
 			if(line.equalsIgnoreCase("PASS")) {
@@ -57,7 +58,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY extends ClientEventListene
 				if(access){
 					pushToServer(channel, ServerEventCode.CODE_GAME_POKER_PLAY, Noson.reversal(options.toArray(new Character[] {})));
 				}else{
-					SimplePrinter.printNotice("Invalid enter");
+					SimplePrinter.printNotice(ConsoleMessage.INVALID_ENTER);
 					call(channel, data);
 				}
 			}

@@ -54,7 +54,7 @@ public class TransferProtocolUtils {
 		if(index != -1) end = index;
 		
 		if(start != -1 && end != -1 && start > end) {
-			throw new LandlordException("Message format error, head and tail error.");
+			throw new LandlordException("ConsoleMessage format error, head and tail error.");
 		}else {
 			byte[] content = new byte[end - start];
 			System.arraycopy(bytes, start, content, 0, content.length);

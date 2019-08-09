@@ -1,5 +1,6 @@
 package com.limicala.dogfight.client.event;
 
+import com.limicala.dogfight.message.ConsoleMessage;
 import io.netty.channel.Channel;
 import com.limicala.dogfight.enums.ClientEventCode;
 import com.limicala.dogfight.enums.ServerEventCode;
@@ -11,11 +12,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 
 	@Override
 	public void call(Channel channel, String data) {
-		SimplePrinter.printNotice("PVE: ");
-		SimplePrinter.printNotice("1. Simple Model");
-		SimplePrinter.printNotice("2. Medium Model");
-		SimplePrinter.printNotice("3. Difficulty Model");
-		SimplePrinter.printNotice("Please enter the number of options (enter [BACK] return options list)");
+		SimplePrinter.printNotice(ConsoleMessage.PVE);
 		String line = SimpleWriter.write("pve");
 		
 		if(line.equalsIgnoreCase("BACK")) {
@@ -23,7 +20,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 		}else {
 
 			while(line == null || OptionsUtils.getOptions(line) == -1) {
-				SimplePrinter.printNotice("Invalid option, please choose again：");
+				SimplePrinter.printNotice(ConsoleMessage.INVALID_OPTION);
 				line = SimpleWriter.write("pve");
 			}
 			
@@ -32,7 +29,7 @@ public class ClientEventListener_CODE_SHOW_OPTIONS_PVE extends ClientEventListen
 			if(0 < choose && choose < 4) {
 				pushToServer(channel, ServerEventCode.CODE_ROOM_CREATE_PVE, String.valueOf(choose));
 			}else {
-				SimplePrinter.printNotice("Invalid option, please choose again：");
+				SimplePrinter.printNotice(ConsoleMessage.INVALID_OPTION);
 				call(channel, data);
 			}
 		}

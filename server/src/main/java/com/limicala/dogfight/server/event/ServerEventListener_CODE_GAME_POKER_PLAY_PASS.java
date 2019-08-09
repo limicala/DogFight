@@ -28,7 +28,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY_PASS implements ServerEven
 
 					boolean hasBigger = false;
 					for(PokerSell sell: sells) {
-						if(sell.getSellType() == lastPokerSell.getSellType()) {
+						if(SellType.KING_BOMB == sell.getSellType() || sell.getSellType() == lastPokerSell.getSellType()) {
 							if(sell.getScore() > lastPokerSell.getScore()) {
 								hasBigger = true;
 								break;

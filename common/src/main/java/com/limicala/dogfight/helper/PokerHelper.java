@@ -645,8 +645,6 @@ public class PokerHelper {
 		return pokers.get(0).getLevel().getLevel();
 	}
 
-
-
 	public static int getMinPokerShell(ClientSide clientSide, PokerSell sell){
 		List<Poker> pokers = clientSide.getPokers();
 //		List<Poker> dest = new LinkedList<>();

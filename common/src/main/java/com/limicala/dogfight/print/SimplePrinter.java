@@ -3,6 +3,7 @@ package com.limicala.dogfight.print;
 import com.limicala.dogfight.entity.Poker;
 import com.limicala.dogfight.helper.PokerHelper;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +20,11 @@ public class SimplePrinter {
 	}
 	
 	public static void printNotice(String msg) {
-		System.out.println(msg);
+		try {
+			System.out.println(new String(msg.getBytes("ISO-8859-1"), "UTF-8"));
+		}catch (UnsupportedEncodingException ignore){
+
+		}
 	}
 	
 	public static void printNotice(String msgKey, String locale) {

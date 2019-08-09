@@ -1,5 +1,6 @@
 package com.limicala.dogfight.server.timer;
 
+import com.limicala.dogfight.print.SimplePrinter;
 import com.limicala.dogfight.server.ServerContains;
 import com.limicala.dogfight.channel.ChannelUtils;
 import com.limicala.dogfight.entity.ClientSide;
@@ -18,11 +19,11 @@ import java.util.TimerTask;
 
 public class RoomClearTask extends TimerTask{
 
-	//The room wait time of after create is 60s
-	private static long waitingStatusInterval = 1000 * 60;
+	//The room wait time of after create is 100s
+	private static long waitingStatusInterval = 1000 * 100;
 
-	//The room starting destroy time is 300s
-	private static long strtingStatusInterval = 1000 * 60;
+	//The room starting destroy time is 100s
+	private static long startingStatusInterval = 1000 * 100;
 
 	@Override
 	public void run() {
@@ -35,7 +36,7 @@ public class RoomClearTask extends TimerTask{
 				if(room.getStatus() != RoomStatus.STARTING){
 					interval = waitingStatusInterval;
 				}else{
-					interval = strtingStatusInterval;
+					interval = startingStatusInterval;
 				}
 				long diff = now - room.getLastFlushTime();
 				System.out.println(room.getId() + "->" + diff);
@@ -75,6 +76,11 @@ public class RoomClearTask extends TimerTask{
 						room.getClientSideList().add(robot);
 						room.setCurrentSellClient(currentPlayer.getId());
 
+						//If last sell client is current client, replace it to robot id
+						if(room.getLastSellClient() == currentPlayer.getId()) {
+							room.setLastSellClient(robot.getId());
+						}
+
 						//set robot difficulty -> simple
 						room.setDifficultyCoefficient(1);
 
@@ -82,6 +88,9 @@ public class RoomClearTask extends TimerTask{
 						
 						//init client
 						currentPlayer.init();
+
+
+						SimplePrinter.serverLog("room " + room.getId() + " player " + currentPlayer.getNickname() + " " + startingStatusInterval + "ms not operating, automatic custody!");
 
 						RobotEventListener.get(ClientEventCode.CODE_GAME_POKER_PLAY).call(robot, null);
 					}

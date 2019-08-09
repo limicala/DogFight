@@ -95,7 +95,7 @@ public class ServerEventListener_CODE_GAME_POKER_PLAY implements ServerEventList
 								.put("clientId", clientSide.getId())
 								.put("clientNickname", clientSide.getNickname())
 								.put("pokers", currentPokers)
-								.put("sellClinetNickname", next.getNickname())
+								.put("sellClientNickname", next.getNickname())
 								.json();
 						for(ClientSide client: room.getClientSideList()) {
 							if(client.getRole() == ClientRole.PLAYER) {

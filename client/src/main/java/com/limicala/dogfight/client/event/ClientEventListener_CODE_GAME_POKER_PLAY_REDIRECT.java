@@ -1,5 +1,6 @@
 package com.limicala.dogfight.client.event;
 
+import com.limicala.dogfight.message.ConsoleMessage;
 import io.netty.channel.Channel;
 import com.limicala.dogfight.client.SimpleClient;
 import com.limicala.dogfight.enums.ClientEventCode;
@@ -40,7 +41,7 @@ public class ClientEventListener_CODE_GAME_POKER_PLAY_REDIRECT extends ClientEve
 		if(sellClientId == SimpleClient.id) {
 			get(ClientEventCode.CODE_GAME_POKER_PLAY).call(channel, data);
 		}else {
-			SimplePrinter.printNotice("Next player is " + map.get("sellClientNickname") + ". Please wait for him to play his cards.");
+			SimplePrinter.printNotice(ConsoleMessage.bind(ConsoleMessage.PLAY_REDIRECT_NEXT_PLAY, map.get("sellClientNickname")));
 		}
 	}
 
